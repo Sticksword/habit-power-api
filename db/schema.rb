@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_10_231816) do
+ActiveRecord::Schema.define(version: 2019_04_07_200643) do
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_follows_on_followee_id"
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
 
   create_table "initiatives", force: :cascade do |t|
     t.string "title"
@@ -31,6 +40,16 @@ ActiveRecord::Schema.define(version: 2019_03_10_231816) do
     t.datetime "updated_at", null: false
     t.integer "state"
     t.index ["user_id"], name: "index_objectives_on_user_id"
+  end
+
+  create_table "success_stories", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "objective_id"
+    t.text "body_json"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["objective_id"], name: "index_success_stories_on_objective_id"
+    t.index ["user_id"], name: "index_success_stories_on_user_id"
   end
 
   create_table "user_credentials", force: :cascade do |t|
