@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 2019_04_07_200643) do
   end
 
   create_table "user_credentials", force: :cascade do |t|
-    t.string "username"
+    t.string "email"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.index ["email"], name: "index_user_credentials_on_email", unique: true
     t.index ["user_id"], name: "index_user_credentials_on_user_id"
-    t.index ["username"], name: "index_user_credentials_on_username", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,8 +70,10 @@ ActiveRecord::Schema.define(version: 2019_04_07_200643) do
     t.string "about"
     t.string "school"
     t.string "company"
+    t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end
