@@ -7,16 +7,21 @@ module Api
     end
 
     def current_objective
+      if user
+        obj = user.objectives.last
+        options = {}
 
-
-      render json: ObjectiveSerializer.new(obj, options).serialized_json
+        render json: ObjectiveSerializer.new(obj, options).serialized_json
+      else
+        render json: { :error => 'can not find' }, status: 404
+      end
     end
 
     private
 
     def user
       @user ||= begin
-        UserCredential.find_by(email: params[:username]).user
+        User.find_by(username: params[:username])
       end
     end
   end

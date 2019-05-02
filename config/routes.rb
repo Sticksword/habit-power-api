@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, param: :username, only: [:show] do
       member do
-        get '/:user_id/current_objective', action: :current_objective
+        get 'current_objective', action: :current_objective
       end
     end
     resources :success_stories, only: [:index] do

@@ -1,9 +1,16 @@
 module Api
   class SuccessStoriesController < ApplicationController
     def index
-      top = SuccessStory.limit(1).first
-      # include other stories by people you follow
-      render json: SuccessStorySerializer.new(top, {}).serialized_json
+      if current_user
+        stories = current_user.success_stories
+        options = {}
+
+        render json: SuccessStorySerializer.new(stories, options).serialized_json
+      else
+        top = SuccessStory.limit(1).first
+
+        render json: SuccessStorySerializer.new(top, {}).serialized_json
+      end
     end
 
     def personal_feed_stories
@@ -11,7 +18,7 @@ module Api
         user.success_stories.limit(3)
       end.flatten
       Rails.logger.info stories.length
-      sleep(2) # testing load indicator in flutter
+      sleep(1.3) # testing load indicator in flutter
 
       render json: SuccessStorySerializer.new(stories, {}).serialized_json
     end
@@ -36,7 +43,7 @@ module Api
 
     def current_user
       @user ||= begin
-        User.find(params[:user_id])
+        User.find_by_id(params[:user_id])
       end
     end
   end

@@ -1,8 +1,5 @@
 module Api
   class AuthenticationController < ApplicationController
-    # https://www.pluralsight.com/guides/ruby-ruby-on-rails/token-based-authentication-with-ruby-on-rails-5-api
-    skip_before_action :authenticate_request
-
     # probably wanna remove in prod, this is only to bypass the CSRF token requirement for POST requests for Rails
     skip_before_action :verify_authenticity_token
 

@@ -22,6 +22,38 @@ UserCredential.create({
   user: u
 })
 
+o = Objective.create({
+  title: 'learn about flutter',
+  description: 'build flutter apps',
+  score: 81,
+  length: 30,
+  user: u
+})
+
+body_json = [
+  {
+    question: 'What behaviors or habits did you have that positively impacted you?',
+    answer: 'I was not afraid to try out Dart and Flutter.'
+  }, {
+    question: 'What did you do when you felt unfocused or overwhelmed?',
+    answer: "I took a nice walk."
+  }, {
+    question: 'What do you still struggle with?',
+    answer: 'Keeping up with so many new things in Dart 2+ and Flutter 1.0+.'
+  }, {
+    question: 'What is something you love to eat?',
+    answer: "I love fruits."
+  }
+]
+
+body_json.map! { |blob| blob.stringify_keys }
+
+SuccessStory.create({
+  body_json: body_json.to_json,
+  objective: o,
+  user: u
+})
+
 u2 = User.create({
   first_name: 'Diana',
   last_name: 'Lee',
@@ -34,6 +66,38 @@ u2 = User.create({
 UserCredential.create({
   email: 'diana@gmail.com',
   password: 'password',
+  user: u2
+})
+
+o2 = Objective.create({
+  title: 'travel',
+  description: 'go to japan',
+  score: 91,
+  length: 30,
+  user: u2
+})
+
+body_json2 = [
+  {
+    question: 'What behaviors or habits did you have that positively impacted you?',
+    answer: 'I was not afraid to travel alone.'
+  }, {
+    question: 'What did you do when you felt unfocused or overwhelmed?',
+    answer: "I took a nice walk."
+  }, {
+    question: 'What do you still struggle with?',
+    answer: 'Keeping up with so many things to do.'
+  }, {
+    question: 'What is something you love to eat?',
+    answer: "I love sushi."
+  }
+]
+
+body_json2.map! { |blob| blob.stringify_keys }
+
+SuccessStory.create({
+  body_json: body_json2.to_json,
+  objective: o2,
   user: u2
 })
 
@@ -76,7 +140,7 @@ o4 = Objective.create({
   user: u4
 })
 
-body_json = [
+body_json4 = [
   {
     question: 'What behaviors or habits did you have that positively impacted you?',
     answer: 'I wrote code pretty much everyday, from implementing algorithms to creating side projects. Don’t feel overwhelmed by the new things you could build or the amount of code you have to write. It’s not as foreign as you’d imagine. You can think of it as writing everyday, although I’m no writer.'
@@ -94,8 +158,15 @@ I often talked out my problems with friends. I'm not afraid to ask for help. I w
   }
 ]
 
+body_json4.map! { |blob| blob.stringify_keys }
+
 SuccessStory.create({
-  body_json: body_json.to_json,
+  body_json: body_json4.to_json,
   objective: o4,
   user: u4
 })
+
+u4.followers += [u]
+u4.followers += [u2]
+u.followers += [u2]
+u.followers += [u4]
